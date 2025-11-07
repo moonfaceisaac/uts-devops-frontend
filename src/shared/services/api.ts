@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class Api {
-  apiNode = 'http://localhost:3000';
+  apiNode = 'http://backend:3000';
 
   constructor(private httpClient: HttpClient) {}
 
