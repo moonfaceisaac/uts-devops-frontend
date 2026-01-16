@@ -62,7 +62,16 @@ jobs:
       - name: Update frontend image tag
         if: github.ref == 'refs/heads/master'
         run: |
-          sed -i "s|image: .*utsfinal-frontend:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/utsfinal-frontend:${{ github.sha }}|" deploy/k8s/frontend/frontend-deployment.yaml
+          FILE=deploy/k8s/frontend/frontend-deployment.yaml
+          IMAGE="${{ secrets.DOCKERHUB_USERNAME }}/utsfinal-frontend:${{ github.sha }}"
+
+          if grep -q "utsfinal-frontend:" "$FILE"; then
+            sed -i "s|utsfinal-frontend:.*|utsfinal-frontend:${{ github.sha }}|" "$FILE"
+          else
+            sed -i "s|utsfinal-frontend|utsfinal-frontend:${{ github.sha }}|" "$FILE"
+          fi
+
+          echo "Updated image to $IMAGE"
 
       - name: Commit and push manifest
         if: github.ref == 'refs/heads/master'
