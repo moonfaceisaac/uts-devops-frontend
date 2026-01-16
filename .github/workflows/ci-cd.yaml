@@ -49,7 +49,7 @@ jobs:
           context: .
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/utsfinal-frontend:${{ github.sha }}"
+            ${{ secrets.DOCKERHUB_USERNAME }}/utsfinal-frontend:${{ github.sha }}
             
       - name: Checkout deployment repo
         if: github.ref == 'refs/heads/master'
